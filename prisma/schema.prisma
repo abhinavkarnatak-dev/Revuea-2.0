@@ -1,0 +1,145 @@
+// Revuea 2.0 — data model
+//
+// Anonymity is a first-class design constraint here:
+//  * Response has NO relation to any user, session, or account.
+//  * No IP addresses, user agents, or device fingerprints are ever stored.
+//  * `submittedAt` is rounded to the hour before persisting, so submission
+//    times cannot be correlated with an individual's activity.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ── Creator accounts ────────────────────────────────────────
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  image     String?
+  createdAt DateTime @default(now())
+  forms     Form[]
+}
+
+/// Short-lived email verification codes for passwordless login.
+/// Codes are stored hashed; expired rows are pruned opportunistically.
+model OtpCode {
+  id        String   @id @default(cuid())
+  email     String
+  codeHash  String
+  expiresAt DateTime
+  attempts  Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+// ── Forms ───────────────────────────────────────────────────
+
+enum FormStatus {
+  DRAFT
+  OPEN
+  CLOSED
+}
+
+model Form {
+  id            String     @id @default(cuid())
+  /// Unguessable public share slug — the only thing respondents ever see.
+  slug          String     @unique
+  title         String
+  description   String     @default("")
+  status        FormStatus @default(DRAFT)
+  accent        String     @default("evergreen")
+  opensAt       DateTime?
+  closesAt      DateTime?
+  responseLimit Int?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  creatorId String
+  creator   User   @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+
+  questions Question[]
+  responses Response[]
+  summary   Summary?
+
+  // A user can't have two forms with the same title (other users can reuse it).
+  @@unique([creatorId, title])
+  @@index([creatorId, createdAt])
+}
+
+enum QuestionType {
+  TEXT
+  MCQ
+  MULTI
+  RATING
+  YES_NO
+}
+
+model Question {
+  id       String       @id @default(cuid())
+  order    Int
+  type     QuestionType
+  label    String
+  required Boolean      @default(true)
+  /// Choice labels for MCQ / MULTI questions; empty for other types.
+  options  String[]
+
+  formId String
+  form   Form   @relation(fields: [formId], references: [id], onDelete: Cascade)
+
+  answers Answer[]
+
+  @@index([formId, order])
+}
+
+// ── Anonymous responses ─────────────────────────────────────
+
+model Response {
+  id     String @id @default(cuid())
+  formId String
+  form   Form   @relation(fields: [formId], references: [id], onDelete: Cascade)
+
+  /// Rounded DOWN to the hour before insert — deliberate precision loss
+  /// so responses cannot be matched to individual activity.
+  submittedAt DateTime
+
+  answers Answer[]
+
+  @@index([formId, submittedAt])
+}
+
+model Answer {
+  id            String  @id @default(cuid())
+  textValue     String?
+  /// Selected option indexes (single element for MCQ / YES_NO, many for MULTI).
+  optionIndexes Int[]
+  /// 1–5 for RATING questions.
+  ratingValue   Int?
+
+  responseId String
+  response   Response @relation(fields: [responseId], references: [id], onDelete: Cascade)
+
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([responseId, questionId])
+  @@index([questionId])
+}
+
+// ── AI summaries (cached) ───────────────────────────────────
+
+model Summary {
+  id            String   @id @default(cuid())
+  formId        String   @unique
+  form          Form     @relation(fields: [formId], references: [id], onDelete: Cascade)
+  content       String
+  /// Response count at generation time — used to detect staleness.
+  responseCount Int
+  generatedAt   DateTime @default(now())
+}

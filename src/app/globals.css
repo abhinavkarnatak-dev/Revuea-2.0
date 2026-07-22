@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+/* ────────────────────────────────────────────────────────────
+   Revuea 2.0 - "Porcelain & Evergreen"
+   Warm paper surfaces, ink typography, deep evergreen accent.
+   Calm, confident, editorial - not corporate, not playful.
+   ──────────────────────────────────────────────────────────── */
+
+@theme {
+  /* Surfaces */
+  --color-paper: #f6f4ef;
+  --color-surface: #fdfcfa;
+  --color-raised: #ffffff;
+  --color-inkwell: #161815;
+  --color-inkwell-soft: #20231f;
+
+  /* Text */
+  --color-ink: #1c1b17;
+  --color-ink-soft: #4c4a43;
+  --color-muted: #767268;
+  --color-faint: #a3a094;
+  --color-paper-text: #ece9e2;
+  --color-paper-text-dim: #a8a598;
+
+  /* Lines */
+  --color-line: #e5e1d8;
+  --color-line-strong: #d4cfc3;
+  --color-line-dark: #2e312c;
+
+  /* Accent - evergreen */
+  --color-ever: #1e5f4b;
+  --color-ever-deep: #174b3b;
+  --color-ever-bright: #2e8b6e;
+  --color-ever-tint: #e9f1ec;
+  --color-ever-wash: #f1f6f3;
+
+  /* Data ink - chart marks only (validated: chroma+contrast on light surface) */
+  --color-chart: #0e8a5f;
+
+  /* Signals */
+  --color-amber: #c07f10;
+  --color-amber-tint: #f9f1e0;
+  --color-clay: #b0462e;
+  --color-clay-tint: #f8ece8;
+  --color-sky: #3d6ea5;
+  --color-sky-tint: #e9f0f7;
+
+  /* Typography */
+  --font-display: var(--font-fraunces), "Georgia", serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  /* Shape */
+  --radius-card: 1.125rem;
+  --radius-field: 0.75rem;
+
+  /* Shadows - soft, warm, layered */
+  --shadow-card: 0 1px 2px rgb(28 27 23 / 0.04), 0 4px 16px rgb(28 27 23 / 0.05);
+  --shadow-lift: 0 2px 4px rgb(28 27 23 / 0.05), 0 12px 32px rgb(28 27 23 / 0.09);
+  --shadow-modal: 0 4px 12px rgb(28 27 23 / 0.08), 0 24px 64px rgb(28 27 23 / 0.18);
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-ever);
+  color: var(--color-paper);
+}
+
+/* Focus - visible, calm, consistent */
+:focus-visible {
+  outline: 2px solid var(--color-ever);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Display serif gets optical settings */
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+}
+
+/* Hairline keyline used between dashboard sections */
+.keyline {
+  border-color: var(--color-line);
+}
+
+/* Number tabular alignment for stats */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Reduced motion: kill transforms, keep opacity fades short */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
