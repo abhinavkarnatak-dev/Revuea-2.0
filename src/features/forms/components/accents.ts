@@ -1,4 +1,4 @@
-import type { AccentValue } from "../schema";
+﻿import type { AccentValue } from "../schema";
 
 /**
  * Visual identity per form accent - used in the builder picker, the public
@@ -26,7 +26,7 @@ export const ACCENT_STYLES: Record<
     tint: "bg-ever-tint",
     text: "text-ever-deep",
     ring: "ring-ever",
-    chart: "#0e8a5f",
+    chart: "var(--chart-evergreen)",
   },
   ink: {
     swatch: "bg-inkwell",
@@ -35,7 +35,7 @@ export const ACCENT_STYLES: Record<
     tint: "bg-ink/6",
     text: "text-ink",
     ring: "ring-inkwell",
-    chart: "#2e312c",
+    chart: "var(--chart-ink)",
   },
   amber: {
     swatch: "bg-amber",
@@ -44,7 +44,7 @@ export const ACCENT_STYLES: Record<
     tint: "bg-amber-tint",
     text: "text-amber",
     ring: "ring-amber",
-    chart: "#c07f10",
+    chart: "var(--chart-amber)",
   },
   sky: {
     swatch: "bg-sky",
@@ -53,7 +53,7 @@ export const ACCENT_STYLES: Record<
     tint: "bg-sky-tint",
     text: "text-sky",
     ring: "ring-sky",
-    chart: "#3d6ea5",
+    chart: "var(--chart-sky)",
   },
   clay: {
     swatch: "bg-clay",
@@ -62,7 +62,7 @@ export const ACCENT_STYLES: Record<
     tint: "bg-clay-tint",
     text: "text-clay",
     ring: "ring-clay",
-    chart: "#b0462e",
+    chart: "var(--chart-clay)",
   },
 };
 

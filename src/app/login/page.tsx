@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { env } from "@/lib/env";
 import { IconMaskOff } from "@/components/icons";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { LoginForm } from "./login-form";
 
 export const metadata: Metadata = { title: "Log in" };
@@ -15,7 +16,7 @@ export default async function LoginPage({
 
   return (
     <div className="flex min-h-dvh flex-col bg-paper">
-      <header className="flex h-16 items-center px-5">
+      <header className="flex h-16 items-center justify-between px-5">
         <Link href="/" className="flex items-center gap-2">
           <span className="flex size-7 items-center justify-center rounded-lg bg-ever text-white">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -31,6 +32,7 @@ export default async function LoginPage({
             Revuea
           </span>
         </Link>
+        <ThemeToggle />
       </header>
 
       <main className="flex flex-1 items-center justify-center px-5 pb-24">

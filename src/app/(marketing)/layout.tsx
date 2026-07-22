@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getCurrentUser } from "@/features/auth/session";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 function Wordmark() {
   return (
@@ -35,6 +36,7 @@ export default async function MarketingLayout({
         <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-5">
           <Wordmark />
           <nav className="flex items-center gap-2">
+            <ThemeToggle />
             {user ? (
               <Link href="/dashboard">
                 <Button size="sm">Open dashboard</Button>

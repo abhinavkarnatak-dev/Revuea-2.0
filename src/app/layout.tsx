@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -31,9 +32,10 @@ export default function RootLayout({
       lang="en"
       className={`${fraunces.variable} ${inter.variable}`}
       data-scroll-behavior="smooth"
+      suppressHydrationWarning
     >
       <body>
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
         <Analytics />
       </body>
     </html>

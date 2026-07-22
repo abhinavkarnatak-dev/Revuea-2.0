@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ────────────────────────────────────────────────────────────
    Revuea 2.0 - "Porcelain & Evergreen"
    Warm paper surfaces, ink typography, deep evergreen accent.
@@ -60,6 +62,67 @@
 
   /* Motion */
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Per-accent chart data-ink (validated per surface with the dataviz checker) */
+:root {
+  color-scheme: light;
+  --chart-evergreen: #0e8a5f;
+  --chart-ink: #2e312c;
+  --chart-amber: #c07f10;
+  --chart-sky: #3d6ea5;
+  --chart-clay: #b0462e;
+}
+
+/* ── Dark theme - warm charcoal, same calm temperament ────── */
+.dark {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --color-paper: #121410;
+  --color-surface: #191c17;
+  --color-raised: #20241f;
+  --color-inkwell: #0b0d0a;
+  --color-inkwell-soft: #161914;
+
+  /* Text */
+  --color-ink: #ebe8e0;
+  --color-ink-soft: #c6c3b9;
+  --color-muted: #96938a;
+  --color-faint: #6b6960;
+
+  /* Lines */
+  --color-line: #262a24;
+  --color-line-strong: #363b34;
+  --color-line-dark: #23261f;
+
+  /* Accent - evergreen (lifted for dark surfaces) */
+  --color-ever: #2a8a68;
+  --color-ever-deep: #35a07f; /* hover lightens in dark */
+  --color-ever-bright: #4fb591;
+  --color-ever-tint: #1d2f26;
+  --color-ever-wash: #161f1a;
+
+  /* Data ink */
+  --color-chart: #17a374;
+  --chart-evergreen: #17a374;
+  --chart-ink: #b5b2a8;
+  --chart-amber: #c07f10;
+  --chart-sky: #4d89cc;
+  --chart-clay: #cf5f43;
+
+  /* Signals */
+  --color-amber: #d9a13c;
+  --color-amber-tint: #2c2414;
+  --color-clay: #d0664c;
+  --color-clay-tint: #2d1c16;
+  --color-sky: #7aa5d8;
+  --color-sky-tint: #1a2431;
+
+  /* Shadows - deeper, on dark they read as depth not dirt */
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 4px 16px rgb(0 0 0 / 0.25);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.35), 0 12px 32px rgb(0 0 0 / 0.4);
+  --shadow-modal: 0 4px 12px rgb(0 0 0 / 0.45), 0 24px 64px rgb(0 0 0 / 0.6);
 }
 
 html {

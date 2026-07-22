@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { requireUser } from "@/features/auth/session";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { UserMenu } from "./user-menu";
 
 export default async function DashboardLayout({
@@ -28,11 +29,14 @@ export default async function DashboardLayout({
               Revuea
             </span>
           </Link>
-          <UserMenu
-            name={user.name}
-            email={user.email}
-            image={user.image}
-          />
+          <div className="flex items-center gap-1.5">
+            <ThemeToggle />
+            <UserMenu
+              name={user.name}
+              email={user.email}
+              image={user.image}
+            />
+          </div>
         </div>
       </header>
       <main className="mx-auto w-full max-w-6xl px-5 py-8 sm:py-10">
